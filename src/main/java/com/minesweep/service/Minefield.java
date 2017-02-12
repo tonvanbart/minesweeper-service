@@ -13,14 +13,14 @@ public class Minefield {
 
     public static Minefield scan(int height, int width, String[] bombs) {
         if (bombs.length != height) {
-            throw new RuntimeException("Provided minefield does not match provided height");
+            throw new ParseException("Provided minefield does not match provided height");
         }
 
         Minefield minefield = new Minefield(height, width);
 
         for (int h = 0; h < height; h++) {
             if (bombs[h].length() != width) {
-                throw new RuntimeException("All provided lines should match provided length");
+                throw new ParseException("All provided lines should match provided length");
             }
 
             char[] markers = bombs[h].toCharArray();
