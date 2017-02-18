@@ -1,7 +1,7 @@
 package com.minesweep.service;
 
 import com.minesweep.dto.MinefieldDto;
-import com.minesweep.repository.InMemoryHintsRepository;
+import com.minesweep.repository.MemoryHintsRepository;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,12 +14,12 @@ import org.springframework.stereotype.Component;
 @Component
 public class HintsService {
 
-    private final InMemoryHintsRepository hintsRepository;
+    private final MemoryHintsRepository hintsRepository;
 
     private static final Logger LOG = LoggerFactory.getLogger(HintsService.class);
 
     @Autowired
-    public HintsService(InMemoryHintsRepository hintsRepository) {
+    public HintsService(MemoryHintsRepository hintsRepository) {
         this.hintsRepository = hintsRepository;
         LOG.info("initialized");
     }

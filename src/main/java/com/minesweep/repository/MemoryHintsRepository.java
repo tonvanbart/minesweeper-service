@@ -16,11 +16,11 @@ import java.util.UUID;
  * Created by ton on 15/02/17.
  */
 @Repository
-public class InMemoryHintsRepository implements HintsRepository {
+public class MemoryHintsRepository implements HintsRepository {
 
     private Map<String, HintsDto> storedHints = new HashMap<>();
 
-    private static final Logger LOG = LoggerFactory.getLogger(InMemoryHintsRepository.class);
+    private static final Logger LOG = LoggerFactory.getLogger(MemoryHintsRepository.class);
 
     @Override
     public String store(String[] hints) {
