@@ -5,15 +5,18 @@ import com.minesweep.dto.MinefieldDto;
 import com.minesweep.service.HintsService;
 import com.minesweep.service.Minefield;
 import com.minesweep.service.ParseException;
+import com.minesweep.service.UidNotFoundException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -54,9 +57,21 @@ public class MinefieldController {
         return result;
     }
 
+    @RequestMapping(value = "/hints/{uuid}", method = RequestMethod.GET)
+    @ResponseStatus(HttpStatus.OK)
+    public String[] getHints(@PathVariable("uuid") String uuid) {
+        return hintsService.getHints(uuid);
+    }
+
     @ExceptionHandler(ParseException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public MessageDto sendParseError(ParseException ex) {
+        return new MessageDto(ex.getClass().getSimpleName(), ex.getMessage());
+    }
+
+    @ExceptionHandler(UidNotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public MessageDto sendUidNotFound(UidNotFoundException ex) {
         return new MessageDto(ex.getClass().getSimpleName(), ex.getMessage());
     }
 }

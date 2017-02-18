@@ -1,5 +1,6 @@
 package com.minesweep.service;
 
+import com.minesweep.dto.HintsDto;
 import com.minesweep.dto.MinefieldDto;
 import com.minesweep.repository.MemoryHintsRepository;
 
@@ -7,6 +8,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import java.util.Optional;
 
 /**
  * Created by ton on 15/02/17.
@@ -33,5 +36,12 @@ public class HintsService {
         Minefield minefield = Minefield.scan(height, width, bombs);
 
         return hintsRepository.store(minefield.getHints());
+    }
+
+    public String[] getHints(String uuid) {
+        Optional<HintsDto> hintsDto = hintsRepository.get(uuid);
+        return hintsDto
+                .orElseThrow(() -> new UidNotFoundException(uuid))
+                .getHints();
     }
 }
